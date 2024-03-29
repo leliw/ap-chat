@@ -1,8 +1,6 @@
 """Main file for FastAPI server"""
 
-import json
-from typing import List, Union
-from fastapi import FastAPI, HTTPException, Request, Response, WebSocket
+from fastapi import FastAPI, Request, WebSocket
 from fastapi.responses import HTMLResponse
 from pyaml_env import parse_config
 
