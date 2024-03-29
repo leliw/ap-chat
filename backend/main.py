@@ -17,6 +17,7 @@ async def read_config():
     """Return config from yaml file"""
     return config
 
+
 @app.websocket("/api/ws")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
@@ -25,6 +26,7 @@ async def websocket_endpoint(websocket: WebSocket):
         question = data.strip('"')
         answer = chat.get_answer(question)
         await websocket.send_json(answer)
+
 
 # Angular static files - it have to be at the end of file
 @app.get("/{full_path:path}", response_class=HTMLResponse)
