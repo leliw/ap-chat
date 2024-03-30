@@ -4,7 +4,7 @@ from fastapi import FastAPI, Request, WebSocket
 from fastapi.responses import HTMLResponse
 from pyaml_env import parse_config
 
-from chat import Chat
+from chat import Chat, ChatMessage
 from static_files import static_file_response
 
 app = FastAPI()
@@ -25,7 +25,13 @@ async def websocket_endpoint(websocket: WebSocket):
         data = await websocket.receive_text()
         question = data.strip('"')
         answer = chat.get_answer(question)
-        await websocket.send_json(answer)
+        await websocket.send_json(answer.dict())
+
+
+@app.post("/api/chat", response_model=ChatMessage, status_code=200)
+async def post_chat_question(question: str):
+    answer = chat.get_answer(question)
+    return answer
 
 
 # Angular static files - it have to be at the end of file
