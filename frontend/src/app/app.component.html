@@ -1,8 +1,20 @@
 <header>
-    <h1>Chat demo</h1>
+    <mat-toolbar color="primary">
+        <h1>Chat demo</h1>
+        @if(user != null){
+        <div class="flex-spacer"></div>
+        <img src="{{ user.photoUrl }}" class="profile-photo" referrerpolicy="no-referrer">
+        <button mat-icon-button aria-label="Logout" (click)="signOut()">
+            <mat-icon aria-hidden="false" aria-label="Logout">logout</mat-icon>
+        </button>
+        }
+    </mat-toolbar>
 </header>
-<main>
-    <app-chat></app-chat>
+<main [class.login]="!loggedIn">
+    @if(loggedIn){<app-chat></app-chat>}
+    @else{
+    <asl-google-signin-button type='standard' size='large'></asl-google-signin-button>
+    }
 </main>
 <section>
     <router-outlet></router-outlet>
